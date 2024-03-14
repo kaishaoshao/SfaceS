@@ -1,0 +1,21 @@
+{
+    "Material": {
+        "AcrylicBlurRadius": 13
+    },
+    "Update": {
+        "CheckUpdateAtStartUp": true
+    },
+    "Folders": {
+        "Download": "C:/Users/WangShaokai/Desktop/PyQt-Fluent-Widgets-master/PyQt-Fluent-Widgets-master/examples/gallery/app/download",
+        "LocalMusic": []
+    },
+    "MainWindow": {
+        "DpiScale": "Auto",
+        "Language": "Auto",
+        "MicaEnabled": true
+    },
+    "QFluentWidgets": {
+        "ThemeColor": "#ff009faa",
+        "ThemeMode": "Light"
+    }
+}
