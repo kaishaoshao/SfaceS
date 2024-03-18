@@ -5,6 +5,7 @@ open函数完成摄像头的配置打开
 
 import cv2
 import numpy as np
+from PyQt5.QtGui import QImage, QPixmap
 
 class camera():
     #初始化
@@ -31,5 +32,24 @@ class camera():
     #摄像头图像格式转换
     def camera_to_pic(self):
         pic = self.read_cameraData()
-        #摄像头是BGR转换为RGB
-        self.curerentframe = cv2.cvtColor(pic,cv2.COLOR_BGR2RGB)
+        # 将图像pic从BGR颜色空间转换为RGB颜色空间，并赋值给self.currentframe
+        self.currentframe = cv2.cvtColor(pic, cv2.COLOR_BGR2RGB)
+        
+        # 获取当前帧的高度和宽度
+        height, width = self.currentframe.shape[:2]
+
+        # 创建一个名为qimg的QImage对象，用于存储当前帧的图像数据
+        qimg = QImage(self.currentframe, width, height, QImage.Format_RGB888)
+        # 根据qimg创建一个名为qpix的QPixmap对象，用于在界面上显示图像
+        qpix = QPixmap.fromImage(qimg)
+
+        return qpix
+
+
+    #关闭摄像头
+    def colse_camera(self):
+        #释放摄像头资源
+        self.capture.release()
+
+
+        
