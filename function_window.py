@@ -19,7 +19,11 @@ class function_window(Ui_mainwindow,QMainWindow):
     def open_sign_in(self):
         #启动摄像头
         self.cameraVideo = camera()
-        #启动定时器，
+        #启动定时器，获取摄像头刷新
+        self.timeshow = QTimer(self)
+        self.timeshow.start(10)
+        #每隔10ms刷新一次
+        self.timeshow.timeout.connect(self.show_cameradata)
 
 
     #摄像头数据显示
@@ -28,5 +32,12 @@ class function_window(Ui_mainwindow,QMainWindow):
         pic = self.cameraVideo.camera_to_pic()
         #在Bodylabel中显示画面
         self.BodyLabel.setPixmap(pic)
+        
 
-    https://www.tenorshare.cn/file-repair/
+    #关闭签到
+    def close_sign_in(self):
+        #关闭定时器
+        self.timeshow.stop()  
+        self.timeshow.timeout.disconnect(self.show_cameradata)
+         #关闭摄像头
+        self.cameraVideo.close_camera()
