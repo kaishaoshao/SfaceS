@@ -14,6 +14,10 @@ class function_window(Ui_mainwindow,QMainWindow):
     def __init__(self):
         super(function_window,self).__init__()
         self.setupUi(self)
+        self.BodyLabel.setScaledContents(True) #设置图片自适应大小
+        self.PushButton.clicked.connect(self.open_sign_in)    #打开签到 （有问题）
+        self.PushButton_2.clicked.connect(self.close_sign_in) #关闭签到  （有问题）
+
 
     #打开签到
     def open_sign_in(self):
@@ -41,3 +45,8 @@ class function_window(Ui_mainwindow,QMainWindow):
         self.timeshow.timeout.disconnect(self.show_cameradata)
          #关闭摄像头
         self.cameraVideo.close_camera()
+        #判断定时器是否关闭，则显示为自己设定的图像
+        if self.timeshow.isActive() == False:
+            self.label.setPixmap(QPixmap("./resource/images/logo.png"))
+        else:
+            QMessageBox.information(self, "提示", "关闭失败")
