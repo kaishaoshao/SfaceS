@@ -4,20 +4,57 @@
 '''
 
 from PyQt5.QtCore import QTimer
-from PyQt5.QtWidgets import QMainWindow
+from PyQt5.QtWidgets import QWidget,QMessageBox
 from cameraVideo import camera
 from main_window import Ui_mainwindow
+from PyQt5.QtGui import QIcon,QPixmap
 
-class function_window(Ui_mainwindow,QMainWindow):
+from view.mainWindow import Ui_mainwindow
+
+from qfluentwidgets import SplitFluentWindow,FluentIcon,NavigationItemPosition,NavigationAvatarWidget
+from main_window import MainWindow
+class Main(SplitFluentWindow):
+
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("SfaceS")
+        self.setWindowIcon(QIcon('./resource/images/logo.png'))
+        self.setMinimumSize(630,510)
+        #添加子界面
+        self.mainWindow = function_window()
+        #添加侧边栏Icon
+        self.addSubInterface(self.mainWindow,FluentIcon.RINGER,"签到界面")
+
+
+        #添加其他导航项
+        self.navigationInterface.addWidget(
+            routeKey = 'avatar',
+            widget = NavigationAvatarWidget('用户','./resource/images/logo.png'),
+            position=NavigationItemPosition.BOTTOM
+        )
+
+        self.navigationInterface.addItem(
+            routeKey = 'setting',
+            icon = FluentIcon.SETTING,
+            text = '设置',
+            position=NavigationItemPosition.BOTTOM
+        )
+
+
+
+class function_window(QWidget,Ui_mainwindow):
     
     #初始化
     def __init__(self):
         super(function_window,self).__init__()
         self.setupUi(self)
-        self.BodyLabel.setScaledContents(True) #设置图片自适应大小
-        self.PushButton.clicked.connect(self.open_sign_in)    #打开签到 （有问题）
-        self.PushButton_2.clicked.connect(self.close_sign_in) #关闭签到  （有问题）
 
+
+
+        # self.BodyLabel.setScaledContents(True) #设置图片自适应大小
+        # self.PushButton.clicked.connect(self.open_sign_in)    #打开签到 （有问题）
+        # self.PushButton_2.clicked.connect(self.close_sign_in) #关闭签到  （有问题）
+        #
 
     #打开签到
     def open_sign_in(self):
@@ -30,18 +67,18 @@ class function_window(Ui_mainwindow,QMainWindow):
         self.timeshow.timeout.connect(self.show_cameradata)
 
 
-    #摄像头数据显示
+    # #摄像头数据显示
     def show_cameradata(self):
         #获取摄像头数据
         pic = self.cameraVideo.camera_to_pic()
         #在Bodylabel中显示画面
         self.BodyLabel.setPixmap(pic)
-        
 
-    #关闭签到
+
+    # #关闭签到
     def close_sign_in(self):
         #关闭定时器
-        self.timeshow.stop()  
+        self.timeshow.stop()
         self.timeshow.timeout.disconnect(self.show_cameradata)
          #关闭摄像头
         self.cameraVideo.close_camera()
