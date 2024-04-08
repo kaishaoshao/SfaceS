@@ -4,7 +4,7 @@ import sys
 
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QApplication,QWidget
-from function_window import function_window,Main
+from function_window import Main
 
 if __name__ == '__main__':
     #enable dpi scale

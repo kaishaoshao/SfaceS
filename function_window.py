@@ -49,15 +49,16 @@ class function_window(QWidget,Ui_mainwindow):
         super(function_window,self).__init__()
         self.setupUi(self)
 
+        self.sign_pressed = False
 
+        self.lab_cap.setScaledContents(True)                #设置图片自适应大小
+        self.btn_sign.clicked.connect(self.open_sign_in)
+        self.btn_close.clicked.connect(self.close_sign_in)
 
-        # self.BodyLabel.setScaledContents(True) #设置图片自适应大小
-        # self.PushButton.clicked.connect(self.open_sign_in)    #打开签到 （有问题）
-        # self.PushButton_2.clicked.connect(self.close_sign_in) #关闭签到  （有问题）
-        #
 
     #打开签到
     def open_sign_in(self):
+        self.sign_pressed = True
         #启动摄像头
         self.cameraVideo = camera()
         #启动定时器，获取摄像头刷新
@@ -72,18 +73,22 @@ class function_window(QWidget,Ui_mainwindow):
         #获取摄像头数据
         pic = self.cameraVideo.camera_to_pic()
         #在Bodylabel中显示画面
-        self.BodyLabel.setPixmap(pic)
+        self.lab_cap.setPixmap(pic)
 
 
     # #关闭签到
     def close_sign_in(self):
-        #关闭定时器
-        self.timeshow.stop()
-        self.timeshow.timeout.disconnect(self.show_cameradata)
-         #关闭摄像头
-        self.cameraVideo.close_camera()
-        #判断定时器是否关闭，则显示为自己设定的图像
-        if self.timeshow.isActive() == False:
-            self.label.setPixmap(QPixmap("./resource/images/logo.png"))
+        if self.sign_pressed == False :
+            QMessageBox.warning(self,"警告","没有签到")
+            return self.sign_pressed
         else:
-            QMessageBox.information(self, "提示", "关闭失败")
+            #关闭定时器
+            self.timeshow.stop()
+            self.timeshow.timeout.disconnect(self.show_cameradata)
+            #关闭摄像头
+            self.cameraVideo.colse_camera()
+            #判断定时器是否关闭，则显示为自己设定的图像
+            if self.timeshow.isActive() == False:
+                self.lab_cap.setPixmap(QPixmap("./resource/images/logo.png"))
+            else:
+                QMessageBox.information(self, "提示", "关闭失败")

@@ -20,6 +20,7 @@ class camera():
             print("摄像头打开成功")
         #定义一个多维数组，用来存储获取的画面数据
         self.curerentframe = np.array([])
+        print("test")
 
     #获取摄像头数据
     def read_cameraData(self):
@@ -50,6 +51,6 @@ class camera():
     def colse_camera(self):
         #释放摄像头资源
         self.capture.release()
-
+        return None
 
         

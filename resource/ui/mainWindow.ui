@@ -35,7 +35,7 @@
      <item>
       <layout class="QVBoxLayout" name="vl_ca" stretch="0,15,0,6,1">
        <item>
-        <widget class="CompactDateTimeEdit" name="CompactDateTimeEdit"/>
+        <widget class="CompactDateTimeEdit" name="time"/>
        </item>
        <item>
         <widget class="CardWidget" name="CardWidget">
@@ -44,7 +44,7 @@
          </property>
          <layout class="QGridLayout" name="gridLayout_6">
           <item row="0" column="0">
-           <widget class="BodyLabel" name="BodyLabel">
+           <widget class="BodyLabel" name="lab_cap">
             <property name="text">
              <string/>
             </property>
@@ -89,7 +89,7 @@
           </spacer>
          </item>
          <item>
-          <widget class="PushButton" name="PushButton">
+          <widget class="PushButton" name="btn_sign">
            <property name="minimumSize">
             <size>
              <width>150</width>
@@ -124,7 +124,7 @@
           </spacer>
          </item>
          <item>
-          <widget class="PushButton" name="PushButton_3">
+          <widget class="PushButton" name="btn_close">
            <property name="minimumSize">
             <size>
              <width>150</width>
@@ -207,7 +207,8 @@
             <item>
              <widget class="IconWidget" name="IconWidget">
               <property name="icon">
-               <iconset theme="wifi"/>
+               <iconset theme="wifi">
+                <normaloff>.</normaloff>.</iconset>
               </property>
              </widget>
             </item>
@@ -247,7 +248,7 @@
            </layout>
           </item>
           <item row="1" column="0">
-           <widget class="TextEdit" name="TextEdit"/>
+           <widget class="TextEdit" name="tex_sign_message"/>
           </item>
          </layout>
         </widget>
@@ -326,7 +327,7 @@
            </layout>
           </item>
           <item row="1" column="0">
-           <widget class="TextEdit" name="TextEdit_2"/>
+           <widget class="TextEdit" name="tex_check_message"/>
           </item>
          </layout>
         </widget>
