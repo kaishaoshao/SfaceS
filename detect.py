@@ -1,5 +1,6 @@
 import requests
 from PyQt5.QtCore import QThread,pyqtSignal
+
 class detect_thread(QThread):
     transmit_data = pyqtSignal(dict) # 定义信号
     def __init__(self,access_token):
@@ -10,8 +11,14 @@ class detect_thread(QThread):
     # run函数执行结束代表线程结束
     def run(self):
         while self.ok == True:
+            print("ok\n")
             if self.condition == True:
+                print("con\n")
                 self.detect_face(self.imge_data)
+                print("con1\n")
+            else:
+                print("yes")
+                break
 
     # 接受主线程传递过来的图像
     def get_imge_data(self,data):
@@ -38,6 +45,7 @@ class detect_thread(QThread):
         #发送post网络请求，请求百度AI进行人脸检测
         response = requests.post(request_url,data=params,headers=headers)
         if response:
+            print(response.json())
             data = response.json()
             self.transmit_data.emit(dict(data))
 

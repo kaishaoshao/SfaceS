@@ -62,22 +62,28 @@ class function_window(QWidget,Ui_mainwindow):
     def open_sign_in(self):
         if self.start_state == True:
 
-            self.sign_pressed = True
             #启动摄像头
             self.cameraVideo = camera()
             #启动定时器，获取摄像头刷新
             self.timeshow = QTimer(self)
             self.timeshow.start(10)
             #每隔10ms刷新一次
+            print("1\n")
             self.timeshow.timeout.connect(self.show_cameradata)
+            print("2\n")
             self.detect = detect_thread(self.access_token) # 创建线程
+            print("3\n")
             self.detect.start() # 启动线程
             #签到500ms获取一次，用来获取检测画面
             self.faceshow = QTimer(self)
             self.faceshow.start(500)
+            print("4\n")
             self.faceshow.timeout.connect(self.get_camera_data)
+            print("5\n")
             self.detect.transmit_data.connect(self.get_data)
+            print("6\n")
             self.start_state = False
+            self.sign_pressed = True
         else:
             QMessageBox.about(self,"提示","正在检测，请关闭")
 
@@ -86,9 +92,11 @@ class function_window(QWidget,Ui_mainwindow):
     def get_camera_data(self):
         camera_data1 = self.cameraVideo.read_cameraData()
         # 把摄像头画面转化为一张图片，然后设置编码为base64编码
-        encode = cv2.imencode('.jpg',camera_data1)
+        _,encode = cv2.imencode('.jpg',camera_data1)
         base64_image = base64.b64encode(encode.tobytes())
+        # print("get_camera_data\n")
         self.detect.get_imge_data(base64_image)
+
 
     # 获取人脸检测数据并显示到文本框中
     def get_data(self, data):
@@ -162,10 +170,10 @@ class function_window(QWidget,Ui_mainwindow):
             QMessageBox.warning(self,"警告","没有签到")
             return self.sign_pressed
         else:
-            self.faceshow.stop()    # 计时器停止
-            self.detect.ok = False  # 停止run
-            self.detect.quit()      # 关闭线程
-
+            self.start_state = True     # 签到关闭
+            self.faceshow.stop()        # 计时器停止
+            self.detect.ok = False      # 停止run
+            self.detect.quit()          # 关闭线程
             #关闭定时器
             self.timeshow.stop()
             self.timeshow.timeout.disconnect(self.show_cameradata)
@@ -174,13 +182,14 @@ class function_window(QWidget,Ui_mainwindow):
             #判断定时器是否关闭，则显示为自己设定的图像
             if self.timeshow.isActive() == False:
                 self.lab_cap.setPixmap(QPixmap("./resource/images/logo.png"))
+                self.tex_check_message.clear()
             else:
                 QMessageBox.warning(self, "提示", "关闭失败")
 
             if self.faceshow.isActive() == True:
                 QMessageBox.warning(self, "警告", "关闭run失败")
             else:
-                return None
+                print("yy")
     def get_accessToken(self):
         #client_id为官网获取的AK,client为SK
         host = "https://aip.baidubce.com/oauth/2.0/token?client_id=epOt70CmIb4G5peBkwoWGfHB&client_secret=Gb4UcedWUGwepjbYGyc9NAA1gGPYBwc7&grant_type=client_credentials"
