@@ -6,18 +6,30 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>942</width>
-    <height>728</height>
+    <width>750</width>
+    <height>600</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>650</width>
+    <height>600</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout_2">
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_5" stretch="1,50,1,50,1">
+    <layout class="QHBoxLayout" name="horizontalLayout_5" stretch="1,50,1,40,1">
+     <property name="spacing">
+      <number>6</number>
+     </property>
      <property name="topMargin">
       <number>30</number>
+     </property>
+     <property name="rightMargin">
+      <number>0</number>
      </property>
      <item>
       <spacer name="horizontalSpacer_8">
@@ -248,7 +260,14 @@
            </layout>
           </item>
           <item row="1" column="0">
-           <widget class="TextEdit" name="tex_sign_message"/>
+           <widget class="TextEdit" name="tex_sign_message">
+            <property name="minimumSize">
+             <size>
+              <width>250</width>
+              <height>200</height>
+             </size>
+            </property>
+           </widget>
           </item>
          </layout>
         </widget>
@@ -327,7 +346,14 @@
            </layout>
           </item>
           <item row="1" column="0">
-           <widget class="TextEdit" name="tex_check_message"/>
+           <widget class="TextEdit" name="tex_check_message">
+            <property name="minimumSize">
+             <size>
+              <width>250</width>
+              <height>200</height>
+             </size>
+            </property>
+           </widget>
           </item>
          </layout>
         </widget>

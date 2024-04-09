@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'mainWindow.ui'
+# Form implementation generated from reading ui file './mainWindow.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.9
 #
@@ -14,11 +14,13 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_mainwindow(object):
     def setupUi(self, mainwindow):
         mainwindow.setObjectName("mainwindow")
-        mainwindow.resize(942, 728)
+        mainwindow.resize(650, 600)
+        mainwindow.setMinimumSize(QtCore.QSize(650, 600))
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout(mainwindow)
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
         self.horizontalLayout_5 = QtWidgets.QHBoxLayout()
-        self.horizontalLayout_5.setContentsMargins(-1, 30, -1, -1)
+        self.horizontalLayout_5.setContentsMargins(-1, 30, 0, -1)
+        self.horizontalLayout_5.setSpacing(6)
         self.horizontalLayout_5.setObjectName("horizontalLayout_5")
         spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout_5.addItem(spacerItem)
@@ -102,6 +104,7 @@ class Ui_mainwindow(object):
         self.horizontalLayout_3.setStretch(3, 50)
         self.gridLayout.addLayout(self.horizontalLayout_3, 0, 0, 1, 1)
         self.tex_sign_message = TextEdit(self.CardWidget_3)
+        self.tex_sign_message.setMinimumSize(QtCore.QSize(250, 200))
         self.tex_sign_message.setObjectName("tex_sign_message")
         self.gridLayout.addWidget(self.tex_sign_message, 1, 0, 1, 1)
         self.vl_group.addWidget(self.CardWidget_3)
@@ -133,6 +136,7 @@ class Ui_mainwindow(object):
         self.horizontalLayout_4.setStretch(3, 50)
         self.gridLayout_3.addLayout(self.horizontalLayout_4, 0, 0, 1, 1)
         self.tex_check_message = TextEdit(self.CardWidget_4)
+        self.tex_check_message.setMinimumSize(QtCore.QSize(250, 200))
         self.tex_check_message.setObjectName("tex_check_message")
         self.gridLayout_3.addWidget(self.tex_check_message, 1, 0, 1, 1)
         self.vl_group.addWidget(self.CardWidget_4)
@@ -154,7 +158,7 @@ class Ui_mainwindow(object):
 
     def retranslateUi(self, mainwindow):
         _translate = QtCore.QCoreApplication.translate
-        mainwindow.setWindowTitle(_translate("mainwindow", "SFaceS"))
+        mainwindow.setWindowTitle(_translate("mainwindow", "Form"))
         self.btn_sign.setText(_translate("mainwindow", "开始签到"))
         self.btn_close.setText(_translate("mainwindow", "停止签到"))
         self.StrongBodyLabel.setText(_translate("mainwindow", "学生签到信息"))

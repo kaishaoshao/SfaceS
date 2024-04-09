@@ -46,3 +46,9 @@ pip install pyuic5     -->安装可能有问题
 pip install requests
 
 ```
+
+### pyqt中ui文件转换为py文件命令
+```
+pyuic5 -o output_file.py input_file.ui
+```
+
