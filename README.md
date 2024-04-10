@@ -47,8 +47,13 @@ pip install requests
 
 ```
 
-### pyqt中ui文件转换为py文件命令
-```
-pyuic5 -o output_file.py input_file.ui
-```
+
+
+
+
+
+
+
+
+
 
