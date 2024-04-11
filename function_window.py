@@ -71,10 +71,10 @@ class function_window(QWidget,Ui_mainwindow):
 
             #签到500ms获取一次，用来获取检测画面
             self.faceshow = QTimer(self)
-            self.faceshow.start(1500)
+            self.faceshow.start(500)
             self.faceshow.timeout.connect(self.get_camera_data)
-
             self.detect.transmit_data.connect(self.get_data)
+            self.detect.transmit_data1.connect(self.get_search_data)
             self.start_state = False
         else:
             QMessageBox.about(self,"提示","正在检测，请关闭")
@@ -198,3 +198,5 @@ class function_window(QWidget,Ui_mainwindow):
         else:
             QMessageBox(self,"提示，请检查网络链接")
 
+    def get_search_data(self,data):
+        self.tex_sign_message.setPlainText(data)
