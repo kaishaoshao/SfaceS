@@ -164,4 +164,3 @@ class Ui_mainwindow(object):
         self.StrongBodyLabel.setText(_translate("mainwindow", "学生签到信息"))
         self.StrongBodyLabel_3.setText(_translate("mainwindow", "学生检测信息"))
 from qfluentwidgets import BodyLabel, CardWidget, CompactDateTimeEdit, IconWidget, PushButton, StrongBodyLabel, TextEdit
-import resource_rc

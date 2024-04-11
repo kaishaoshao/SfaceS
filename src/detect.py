@@ -84,7 +84,7 @@ class detect_thread(QThread):
 
                 self.transmit_data1.emit(stu_str + "姓名:" + list1[0] + "\n" + "班级:" + list1[1])  # 将信号发送给主线程
 
-
+    
 
 
 

@@ -6,41 +6,12 @@ import base64
 
 import cv2
 import requests
+from PyQt5.QtGui import QPixmap
 from PyQt5.QtCore import QTimer
 from PyQt5.QtWidgets import QWidget,QMessageBox
-from cameraVideo import camera
-from PyQt5.QtGui import QIcon,QPixmap
+from src.cameraVideo import camera
 from view.mainWindow import Ui_mainwindow
-from qfluentwidgets import SplitFluentWindow,FluentIcon,NavigationItemPosition,NavigationAvatarWidget
-from detect import detect_thread
-
-class Main(SplitFluentWindow):
-
-    def __init__(self):
-        super().__init__()
-        self.setWindowTitle("SfaceS")
-        self.setWindowIcon(QIcon('./resource/images/logo.png'))
-        self.setMinimumSize(700,600)
-        #添加子界面
-        self.mainWindow = function_window()
-        #添加侧边栏Icon
-        self.addSubInterface(self.mainWindow,FluentIcon.RINGER,"签到界面")
-
-
-        #添加其他导航项
-        self.navigationInterface.addWidget(
-            routeKey = 'avatar',
-            widget = NavigationAvatarWidget('用户','./resource/images/logo.png'),
-            position=NavigationItemPosition.BOTTOM
-        )
-
-        self.navigationInterface.addItem(
-            routeKey = 'setting',
-            icon = FluentIcon.SETTING,
-            text = '设置',
-            position=NavigationItemPosition.BOTTOM
-        )
-
+from src.detect import detect_thread
 
 
 class function_window(QWidget,Ui_mainwindow):
@@ -95,7 +66,7 @@ class function_window(QWidget,Ui_mainwindow):
             self.cameraVideo.colse_camera()
             # 判断定时器是否关闭，则显示为自己设定的图像
             if self.timeshow.isActive() == False:
-                self.lab_cap.setPixmap(QPixmap("./resource/images/logo.png"))
+                self.lab_cap.setPixmap(QPixmap("../resource/images/logo.png"))
                 self.tex_check_message.clear()
             else:
                 QMessageBox.warning(self, "提示", "关闭失败")
