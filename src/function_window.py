@@ -8,11 +8,10 @@ import cv2
 import requests
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtCore import QTimer
-from PyQt5.QtWidgets import QWidget,QMessageBox
 from src.cameraVideo import camera
-from view.mainWindow import Ui_mainwindow
 from src.detect import detect_thread
-
+from view.mainWindow import Ui_mainwindow
+from PyQt5.QtWidgets import QWidget,QMessageBox,QInputDialog
 
 class function_window(QWidget,Ui_mainwindow):
     #初始化
@@ -20,10 +19,10 @@ class function_window(QWidget,Ui_mainwindow):
         super(function_window,self).__init__()
         self.setupUi(self)
         self.sign_pressed = False
-        self.lab_cap.setScaledContents(True)                #设置图片自适应大小
-        self.btn_sign.clicked.connect(self.open_sign_in)
-        self.btn_close.clicked.connect(self.close_sign_in)
-        self.access_token = self.get_accessToken()
+        self.lab_cap.setScaledContents(True)                # 设置图片自适应大小
+        self.btn_sign.clicked.connect(self.open_sign_in)    # 打开签到
+        self.btn_close.clicked.connect(self.close_sign_in)  # 关闭签到
+        self.access_token = self.get_accessToken()          # 调用api
         self.start_state = True
     #打开签到
     def open_sign_in(self):
@@ -169,5 +168,77 @@ class function_window(QWidget,Ui_mainwindow):
         else:
             QMessageBox(self,"提示，请检查网络链接")
 
+    # 查找人脸数据
     def get_search_data(self,data):
         self.tex_sign_message.setPlainText(data)
+
+    # 添加班级
+    def add_class(self):
+        # 打开输入框，进行输入用户组
+        group, ret = QInputDialog.getText(self, "添加班级", "请输入班级名称(由数字、字母、下划线组成)")
+        if group == "":
+            print("取消添加班级")
+        else:
+            request_url = "https://aip.baidubce.com/rest/2.0/face/v3/faceset/group/add"
+
+            params = {
+                "group_id": group
+            }
+            access_token = self.access_token
+            request_url = request_url + "?access_token=" + access_token
+            headers = {'content-type': 'application/json'}
+            response = requests.post(request_url, data=params, headers=headers)
+            if response:
+                print(response.json())
+                message = response.json()
+                if message['error_code'] == 0:  # 根据规则，返回0则为班级添加成功
+                    QMessageBox.about(self, "班级创建结果", "班级创建成功")
+                else:
+                    QMessageBox.about(self, "班级创建结果", "班级创建失败")
+
+    # 班级查询
+    def get_class(self):
+        request_url = "https://aip.baidubce.com/rest/2.0/face/v3/faceset/group/getlist"
+        params = {
+            "start": 0,
+            "length": 100
+        }
+        access_token = self.access_token
+        request_url = request_url + "?access_token=" + access_token
+        headers = {'content-type': 'application/json'}
+        response = requests.post(request_url, data=params, headers=headers)
+        if response:
+            return response.json()
+
+    # 将查询结果显示在MessageBox中
+    def display_class(self):
+        list = self.get_class()
+        str = ''
+        for i in list['result']['group_id_list']:
+            str = str + '\n' + i
+        QMessageBox.about(self, "班级列表", str)
+
+    # 班级删除
+    def delete_class(self):
+        # 打开输入框，进行输入用户组
+        list = self.get_class()  # 首先获取用户组信息
+        group, ret = QInputDialog.getText(self, "存在的班级", "班级信息" + str(list['result']['group_id_list']))
+        if group == "":
+            print("取消删除班级")
+        else:
+            request_url = "https://aip.baidubce.com/rest/2.0/face/v3/faceset/group/delete"
+
+            params = {
+                "group_id": group  # 要删除用户组的id
+            }
+            access_token = self.access_token
+            request_url = request_url + "?access_token=" + access_token
+            headers = {'content-type': 'application/json'}
+            response = requests.post(request_url, data=params, headers=headers)
+            if response:
+                print(response.json())
+                message = response.json()
+                if message['error_code'] == 0:
+                    QMessageBox.about(self, "班级删除结果", "班级删除成功")
+                else:
+                    QMessageBox.about(self, "班级删除结果", "班级删除失败")
