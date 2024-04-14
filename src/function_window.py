@@ -13,6 +13,7 @@ from src.detect import detect_thread
 from view.mainWindow import Ui_mainwindow
 from PyQt5.QtWidgets import QWidget,QMessageBox,QInputDialog
 
+from qfluentwidgets import StateToolTip
 class function_window(QWidget,Ui_mainwindow):
     #初始化
     def __init__(self):
@@ -21,13 +22,15 @@ class function_window(QWidget,Ui_mainwindow):
         self.sign_pressed = False
         self.lab_cap.setScaledContents(True)                # 设置图片自适应大小
         self.btn_sign.clicked.connect(self.open_sign_in)    # 打开签到
+        self.btn_sign.clicked.connect(self.onButtonClicked)
         self.btn_close.clicked.connect(self.close_sign_in)  # 关闭签到
+        self.btn_close.clicked.connect(self.onButtonClicked)
         self.access_token = self.get_accessToken()          # 调用api
         self.start_state = True
+        self.stateTooltip = None
     #打开签到
     def open_sign_in(self):
         if self.start_state == True:
-
             #启动摄像头
             self.cameraVideo = camera()
             #启动定时器，获取摄像头刷新
@@ -53,7 +56,6 @@ class function_window(QWidget,Ui_mainwindow):
     # #关闭签到
     def close_sign_in(self):
         if  self.start_state == False:
-
             self.start_state = True  # 签到关闭
             self.faceshow.stop()  # 计时器停止
             self.detect.ok = False  # 停止run
@@ -242,3 +244,14 @@ class function_window(QWidget,Ui_mainwindow):
                     QMessageBox.about(self, "班级删除结果", "班级删除成功")
                 else:
                     QMessageBox.about(self, "班级删除结果", "班级删除失败")
+
+
+    def onButtonClicked(self):
+        if self.stateTooltip:
+            self.stateTooltip.setContent('签到关闭啦 😆')
+            self.stateTooltip.setState(True)
+            self.stateTooltip = None
+        else:
+            self.stateTooltip = StateToolTip('正在签到', '同学请耐心等待哦~~', self)
+            self.stateTooltip.move(510, 30)
+            self.stateTooltip.show()
