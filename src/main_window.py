@@ -4,10 +4,12 @@ from PyQt5.QtCore import Qt, QUrl
 from PyQt5.QtGui import QIcon,QColor, QCursor
 from view.mainWindow import Ui_mainwindow
 
-from src.finfmation_window import finfmation_window
-from src.function_window import function_window
+
+
 from src.msg_window import message_window
 from src.login_window import login_window
+from src.function_window import function_window
+from src.finfmation_window import finfmation_window
 
 from PyQt5.QtWidgets import  QWidget
 from qfluentwidgets import (SplitFluentWindow,RoundMenu,NavigationItemPosition,NavigationAvatarWidget,

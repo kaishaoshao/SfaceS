@@ -13,46 +13,90 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QHBoxLayout" name="horizontalLayout_3">
-   <item>
-    <layout class="QGridLayout" name="gridLayout" columnstretch="0">
-     <property name="sizeConstraint">
-      <enum>QLayout::SetDefaultConstraint</enum>
-     </property>
-     <property name="leftMargin">
-      <number>20</number>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="0">
+    <layout class="QHBoxLayout" name="horizontalLayout_5" stretch="0">
+     <property name="spacing">
+      <number>6</number>
      </property>
      <property name="topMargin">
-      <number>40</number>
+      <number>30</number>
      </property>
      <property name="rightMargin">
-      <number>20</number>
+      <number>0</number>
      </property>
-     <property name="bottomMargin">
-      <number>20</number>
-     </property>
-     <property name="spacing">
-      <number>12</number>
-     </property>
-     <item row="2" column="0">
-      <widget class="CheckBox" name="CheckBox">
-       <property name="text">
-        <string>Check box</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="0">
-      <widget class="PillPushButton" name="PillPushButton">
-       <property name="text">
-        <string>Pill push button</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="0">
-      <widget class="SplitPushButton" name="SplitPushButton">
-       <property name="text_" stdset="0">
-        <string>Split push button</string>
-       </property>
+     <item>
+      <widget class="CardWidget" name="wid_stu_2">
+       <layout class="QGridLayout" name="gridLayout_2">
+        <item row="0" column="0">
+         <widget class="PushButton" name="btn_class">
+          <property name="text">
+           <string>班级管理</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="PushButton" name="btn_stu">
+          <property name="text">
+           <string>学生管理</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="CardWidget" name="wid_class">
+          <layout class="QHBoxLayout" name="horizontalLayout">
+           <item>
+            <widget class="PushButton" name="btn_addclass">
+             <property name="text">
+              <string>添加班级</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="PushButton" name="btn_delclass">
+             <property name="text">
+              <string>删除班级</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="PushButton" name="btn_findclass">
+             <property name="text">
+              <string>查找班级</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="CardWidget" name="wid_stu">
+          <layout class="QHBoxLayout" name="horizontalLayout_2">
+           <item>
+            <widget class="PushButton" name="btn_addstu">
+             <property name="text">
+              <string>添加学生</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="PushButton" name="btn_delstu">
+             <property name="text">
+              <string>删除学生</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="PushButton" name="btn_findstu">
+             <property name="text">
+              <string>查找学生</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+       </layout>
       </widget>
      </item>
     </layout>
@@ -61,29 +105,15 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>CheckBox</class>
-   <extends>QCheckBox</extends>
-   <header>qfluentwidgets</header>
-  </customwidget>
-  <customwidget>
    <class>PushButton</class>
    <extends>QPushButton</extends>
    <header>qfluentwidgets</header>
   </customwidget>
   <customwidget>
-   <class>PillPushButton</class>
-   <extends>ToggleButton</extends>
+   <class>CardWidget</class>
+   <extends>QFrame</extends>
    <header>qfluentwidgets</header>
-  </customwidget>
-  <customwidget>
-   <class>SplitPushButton</class>
-   <extends>QWidget</extends>
-   <header>qfluentwidgets</header>
-  </customwidget>
-  <customwidget>
-   <class>ToggleButton</class>
-   <extends>PushButton</extends>
-   <header>qfluentwidgets</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources>
