@@ -97,3 +97,75 @@ class message_window(QWidget, Ui_FocusInterface):
                     QMessageBox.about(self, "用户删除结果", "用户删除成功")
                 else:
                     QMessageBox.about(self, "用户删除结果", "用户删除失败")
+
+
+#增加学生信息
+    def add_student(self):
+        '''
+        人脸注册
+        '''
+        list=self.get_class()#获取班级，将班级信息传递到我们新建的界面之中
+        # 创建一个窗口，进行用户信息录入
+        window = add_student_window(list['result']['group_id_list'],self)#将获取到的班级传递到新的界面，后续有用
+        #新创建窗口，通过exec()函数一直在执行，窗口不进行关闭
+        window_status=window.exec_()
+        #判断
+        if window_status !=1:
+            return
+        base64_image = window.base64_image
+        # 参数请求中，需要获取人脸编码，添加的组的id,添加的用户，新用户id信息
+        request_url = "https://aip.baidubce.com/rest/2.0/face/v3/faceset/user/add"
+
+        params = {
+            "image": base64_image,  # 人脸图片
+            "image_type": "BASE64",  # 图片编码格式
+            "group_id": window.class_id,  # 班级名称
+            "user_id": window.student_id,  # 学生学号
+            "user_info": window.student_name# 学生姓名
+        }
+        access_token = self.access_token
+        request_url = request_url + "?access_token=" + access_token
+        headers = {'content-type': 'application/json'}
+        response = requests.post(request_url, data=params, headers=headers)
+        if response:
+            data = response.json()
+            if data['error_code'] == 0:
+                QMessageBox.about(self, "增加结果", "学生增加成功！")
+            else:
+                QMessageBox.about(self, "增加结果", "学生增加失败！")
+
+
+    def show_camera(self):
+        # 获取摄像头数据
+        pic = self.cameravideo.camera_to_pic()#获取一帧图像
+        # 显示数据、显示画面
+        self.label.setPixmap(pic)
+
+    def get_cameradata(self):
+        camera_data1 = self.cameravideo.read_camera()
+        # 把摄像头画面转化为一张图片，然后设置编码为base64编码
+        _, enc = cv2.imencode('.jpg', camera_data1)
+        base64_image = base64.b64encode(enc.tobytes())
+        self.base64_image=base64_image#全局变量，用于保存画面base64格式画面
+        self.time.stop()#计时器停止
+        self.cameravideo.colse_camera()#摄像机关闭
+
+    def show_class(self):
+        self.comboBox.clear()
+        for i in self.list:
+            self.comboBox.addItem(i)#将获取到的班级列表显示在下拉框中
+
+    
+       #获取学生基本信息
+    def get_student_data(self):
+        self.class_id=self.comboBox.currentText()#获取班级
+        self.student_id=self.lineEdit.text()#获取学号
+        self.student_name=self.lineEdit_2.text()#获取姓名
+        self.accept()#点击确认后关闭对话框
+    #关闭窗口
+    def close_window(self):
+        #关闭对话框
+        self.close()
+
+
+
